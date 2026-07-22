@@ -1,0 +1,1652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BIOHACK | Research Peptides</title>
+  <style>
+    :root {
+      --bg: #050505;
+      --card-bg: #0d0d0e;
+      --card-border: #1f1f24;
+      --card-border-hover: #d4af37;
+      
+      --primary-gold: #d4af37;
+      --gold-hover: #f3e5ab;
+      --gold-gradient: linear-gradient(135deg, #bf953f 0%, #fcf6ba 25%, #b38728 50%, #fbf5b7 75%, #aa771c 100%);
+      --light-gold: rgba(212, 175, 55, 0.12);
+      
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --nav-bg: rgba(5, 5, 5, 0.92);
+      
+      --shadow-sm: 0 2px 4px rgba(0,0,0,0.8);
+      --shadow-md: 0 10px 25px -5px rgba(212, 175, 55, 0.15);
+      --shadow-lg: 0 20px 30px -10px rgba(212, 175, 55, 0.25);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      min-height: 100vh;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    /* Floating WhatsApp Circle Button */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 25px;
+      left: 25px;
+      width: 60px;
+      height: 60px;
+      background-color: #25d366;
+      color: #fff;
+      border-radius: 50px;
+      text-align: center;
+      font-size: 30px;
+      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .whatsapp-float svg {
+      width: 32px;
+      height: 32px;
+      fill: #ffffff;
+    }
+
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+      background-color: #20bd5a;
+      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+    }
+
+    /* Navigation Bar */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--nav-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--card-border);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand-logo {
+      font-size: 1.5rem;
+      font-weight: 900;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      background: var(--gold-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-decoration: none;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    .search-input {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 0.55rem 1rem;
+      border-radius: 20px;
+      color: var(--text-main);
+      font-size: 0.85rem;
+      outline: none;
+      width: 170px;
+      transition: all 0.3s ease;
+    }
+
+    .search-input:focus {
+      border-color: var(--primary-gold);
+      width: 220px;
+      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .nav-item {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    .nav-item:hover {
+      color: var(--primary-gold);
+    }
+
+    .tiktok-nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: #ffffff;
+      background: #121215;
+      border: 1px solid var(--card-border);
+      padding: 0.5rem 0.9rem;
+      border-radius: 20px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 700;
+      transition: all 0.25s;
+    }
+
+    .tiktok-nav-btn:hover {
+      background: #1f1f24;
+      border-color: var(--primary-gold);
+    }
+
+    .cart-btn {
+      position: relative;
+      background: var(--gold-gradient);
+      border: none;
+      color: #000000;
+      padding: 0.6rem 1.2rem;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 900;
+      font-size: 0.88rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: var(--shadow-md);
+      transition: all 0.25s ease;
+    }
+
+    .cart-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .cart-badge {
+      background: #000000;
+      color: var(--primary-gold);
+      font-size: 0.75rem;
+      font-weight: 900;
+      padding: 2px 7px;
+      border-radius: 10px;
+    }
+
+    /* Hero Section */
+    .hero {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 4.5rem 1.5rem 2.5rem 1.5rem;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 3.8rem;
+      font-weight: 900;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      background: var(--gold-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+      filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.2));
+    }
+
+    .hero p {
+      color: var(--text-muted);
+      font-size: 1.15rem;
+      line-height: 1.6;
+      max-width: 700px;
+      margin: 0 auto 2rem auto;
+      font-weight: 500;
+    }
+
+    .hero-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .cta-pill {
+      padding: 0.85rem 2.2rem;
+      background: var(--gold-gradient);
+      color: #000000;
+      font-size: 0.95rem;
+      font-weight: 900;
+      text-decoration: none;
+      border-radius: 30px;
+      box-shadow: var(--shadow-md);
+      transition: all 0.25s;
+    }
+
+    .cta-pill:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .secondary-pill {
+      padding: 0.85rem 2rem;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-decoration: none;
+      border-radius: 30px;
+      transition: all 0.25s;
+    }
+
+    .secondary-pill:hover {
+      border-color: var(--primary-gold);
+      color: var(--primary-gold);
+    }
+
+    /* Info Cards Section */
+    .info-section {
+      max-width: 1200px;
+      margin: 0 auto 4rem auto;
+      padding: 0 1.5rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .info-box {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 1.8rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .info-box h3 {
+      font-size: 1.2rem;
+      color: var(--primary-gold);
+      margin-bottom: 0.5rem;
+      font-weight: 800;
+    }
+
+    .info-box p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    /* Category Filter Buttons */
+    .filter-container {
+      display: flex;
+      justify-content: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+      padding: 0 1.5rem;
+    }
+
+    .filter-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 0.55rem 1.2rem;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.88rem;
+      font-weight: 700;
+      transition: all 0.25s;
+    }
+
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--gold-gradient);
+      border-color: transparent;
+      color: #000000;
+      font-weight: 900;
+    }
+
+    /* Catalog Section */
+    .catalog-title {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .catalog-title h2 {
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--text-main);
+    }
+
+    .catalog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.8rem;
+      max-width: 1250px;
+      margin: 0 auto;
+      padding: 0 1.5rem 3rem 1.5rem;
+    }
+
+    .product-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--card-border-hover);
+      box-shadow: var(--shadow-md);
+    }
+
+    .card-preview {
+      width: 100%;
+      height: 175px;
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, rgba(13, 13, 14, 1) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid var(--card-border);
+      position: relative;
+      padding: 10px;
+    }
+
+    .card-preview img {
+      max-height: 145px;
+      width: auto;
+      object-fit: contain;
+      transition: transform 0.3s ease;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.7));
+    }
+
+    .product-card:hover .card-preview img {
+      transform: scale(1.08);
+    }
+
+    .card-body {
+      padding: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      justify-content: space-between;
+    }
+
+    .card-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.8rem;
+    }
+
+    .product-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .product-price {
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: var(--primary-gold);
+    }
+
+    /* Dose Selector Box Style */
+    .dose-selector-box {
+      background: #050507;
+      border: 1px solid #1a1a20;
+      border-radius: 12px;
+      padding: 0.75rem 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .dose-selector-label {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--primary-gold);
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .dose-options {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .dose-btn {
+      flex: 1;
+      padding: 0.5rem 0;
+      background: #141418;
+      border: 1px solid #22222a;
+      border-radius: 8px;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-weight: 800;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+
+    .dose-btn.active {
+      background: var(--gold-gradient);
+      border-color: transparent;
+      color: #000000;
+      box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+    }
+
+    .dosage-pill {
+      display: inline-block;
+      padding: 0.3rem 0.75rem;
+      background: var(--light-gold);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: var(--primary-gold);
+    }
+
+    .product-desc {
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      line-height: 1.5;
+      margin-bottom: 1.3rem;
+    }
+
+    .click-info-hint {
+      font-size: 0.75rem;
+      color: var(--primary-gold);
+      margin-bottom: 0.8rem;
+      font-weight: 700;
+    }
+
+    .btn-add-cart {
+      width: 100%;
+      padding: 0.85rem;
+      background: var(--gold-gradient);
+      color: #000000;
+      font-weight: 900;
+      font-size: 0.85rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      transition: all 0.25s;
+    }
+
+    .btn-add-cart:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-secondary {
+      width: 100%;
+      padding: 0.85rem;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      font-weight: 800;
+      font-size: 0.85rem;
+      border-radius: 10px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      transition: all 0.25s;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--primary-gold);
+      color: var(--primary-gold);
+    }
+
+    /* Modal Pop-up */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 300;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      padding: 1.5rem;
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-card {
+      background: var(--card-bg);
+      border: 1px solid var(--primary-gold);
+      border-radius: 24px;
+      max-width: 550px;
+      width: 100%;
+      padding: 2rem;
+      position: relative;
+      box-shadow: 0 0 50px rgba(212, 175, 55, 0.25);
+      transform: scale(0.7);
+      transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .modal-overlay.open .modal-card {
+      transform: scale(1);
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1.2rem;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.8rem;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .modal-close-btn:hover {
+      color: var(--primary-gold);
+    }
+
+    .modal-preview {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1.5rem;
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, rgba(13, 13, 14, 1) 100%);
+      border-radius: 16px;
+      border: 1px solid var(--card-border);
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-preview img {
+      max-height: 160px;
+      width: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.3));
+    }
+
+    .modal-title {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--text-main);
+      margin-bottom: 0.3rem;
+    }
+
+    .modal-category {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--primary-gold);
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+
+    .modal-explanation {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      background: var(--bg);
+      padding: 1rem;
+      border-radius: 12px;
+      border: 1px solid var(--card-border);
+    }
+
+    .modal-highlights {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-highlight-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.88rem;
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    .modal-highlight-item span {
+      color: var(--primary-gold);
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 0.8rem;
+      margin-top: 1rem;
+    }
+
+    /* Cart Drawer & Backdrop */
+    .cart-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(6px);
+      z-index: 200;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .cart-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .cart-panel {
+      position: fixed;
+      top: 0;
+      right: -420px;
+      width: 100%;
+      max-width: 400px;
+      height: 100%;
+      background: var(--card-bg);
+      border-left: 1px solid var(--card-border);
+      z-index: 201;
+      padding: 1.8rem 1.6rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: -10px 0 30px rgba(0,0,0,0.8);
+      transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .cart-panel.open {
+      right: 0;
+    }
+
+    .cart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .cart-header h3 {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.6rem;
+      cursor: pointer;
+    }
+
+    .cart-items {
+      flex-grow: 1;
+      overflow-y: auto;
+      margin: 1.2rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .cart-item {
+      background: var(--bg);
+      border: 1px solid var(--card-border);
+      padding: 0.9rem 1rem;
+      border-radius: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .item-title {
+      font-weight: 800;
+      color: var(--text-main);
+      font-size: 0.92rem;
+    }
+
+    .item-dose {
+      font-size: 0.8rem;
+      color: var(--primary-gold);
+      font-weight: 700;
+      margin-top: 2px;
+    }
+
+    .item-price {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .qty-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .q-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--primary-gold);
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 800;
+    }
+
+    /* Cart Summary UI */
+    .cart-summary {
+      border-top: 1px solid var(--card-border);
+      padding-top: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    .summary-row.total {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-top: 8px;
+    }
+
+    .payment-badge-box {
+      background: #050507;
+      border: 1px solid #1f1f26;
+      border-radius: 10px;
+      padding: 0.6rem 0.8rem;
+      margin-bottom: 0.8rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    .payment-badge-box strong {
+      color: var(--primary-gold);
+    }
+
+    .whatsapp-btn {
+      width: 100%;
+      padding: 1rem;
+      background: #25d366;
+      color: #ffffff;
+      font-weight: 900;
+      font-size: 0.95rem;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      text-transform: uppercase;
+      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.2);
+      transition: background 0.25s;
+    }
+
+    .whatsapp-btn svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    .whatsapp-btn:hover {
+      background: #20bd5a;
+    }
+
+    .empty-cart {
+      text-align: center;
+      color: var(--text-muted);
+      margin-top: 4rem;
+      font-weight: 500;
+    }
+
+    /* Toast Notification Container */
+    .toast-container {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      pointer-events: none;
+    }
+
+    .toast {
+      background: var(--card-bg);
+      color: var(--text-main);
+      border: 1px solid var(--card-border);
+      border-left: 4px solid var(--primary-gold);
+      padding: 0.9rem 1.2rem;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* FAQ Section */
+    .faq-section {
+      max-width: 850px;
+      margin: 2rem auto 5rem auto;
+      padding: 0 1.5rem;
+    }
+
+    .faq-section h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--text-main);
+    }
+
+    .faq-item {
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      margin-bottom: 1rem;
+      overflow: hidden;
+      background: var(--card-bg);
+      transition: border-color 0.25s;
+    }
+
+    .faq-item:hover {
+      border-color: rgba(212, 175, 55, 0.4);
+    }
+
+    .faq-question {
+      width: 100%;
+      padding: 1.1rem 1.4rem;
+      background: none;
+      border: none;
+      color: var(--text-main);
+      text-align: left;
+      font-size: 1rem;
+      font-weight: 700;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .faq-icon {
+      font-size: 1.3rem;
+      color: var(--primary-gold);
+      transition: transform 0.3s ease;
+    }
+
+    .faq-item.active .faq-icon {
+      transform: rotate(45deg);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+      padding: 0 1.4rem;
+      color: var(--text-muted);
+      font-size: 0.93rem;
+      line-height: 1.6;
+    }
+
+    .faq-item.active .faq-answer {
+      max-height: 200px;
+      padding: 0 1.4rem 1.2rem 1.4rem;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--card-bg);
+      border-top: 1px solid var(--card-border);
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+    }
+
+    footer p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 0.8rem;
+      font-weight: 500;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.8rem;
+      }
+      .nav-links {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Circle WhatsApp Direct Message Button -->
+  <a href="https://wa.me/96176192117" class="whatsapp-float" target="_blank" aria-label="Direct Message on WhatsApp">
+    <svg viewBox="0 0 24 24">
+      <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.572-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+    </svg>
+  </a>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="#" class="brand-logo">BIOHACK</a>
+    <div class="nav-right">
+      <input type="text" id="searchInput" class="search-input" placeholder="Search peptides..." onkeyup="filterPeptides()"/>
+      <div class="nav-links">
+        <a href="#about" class="nav-item">About</a>
+        <a href="#catalog" class="nav-item">Catalog</a>
+        <a href="#faq" class="nav-item">FAQ</a>
+        <a href="https://www.tiktok.com/@biohack.peptide?_r=1&_t=ZS-98FJKgIG34m" target="_blank" class="tiktok-nav-btn">
+          TikTok
+        </a>
+      </div>
+      <button class="cart-btn" onclick="toggleCart()">
+        Cart <span class="cart-badge" id="cartCount">0</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Header -->
+  <section class="hero">
+    <h1>BIOHACK</h1>
+    <p>
+      Simple, powerful peptides for fat loss, muscle recovery, glowing skin, and focus. Pure compounds designed for clear results.
+    </p>
+    <div class="hero-buttons">
+      <a href="#catalog" class="cta-pill">Browse Catalog &rarr;</a>
+      <a href="https://www.tiktok.com/@biohack.peptide?_r=1&_t=ZS-98FJKgIG34m" target="_blank" class="secondary-pill">TikTok Page</a>
+    </div>
+  </section>
+
+  <!-- Information Cards -->
+  <section class="info-section" id="about">
+    <div class="info-box">
+      <h3>What Are Peptides?</h3>
+      <p>Peptides are targeted amino acid chains that signal your body to recover faster, burn fat, or boost focus.</p>
+    </div>
+    <div class="info-box">
+      <h3>Delivery All Over Lebanon</h3>
+      <p>Fast and reliable doorstep delivery across all regions of Lebanon for a fixed fee of $5.</p>
+    </div>
+    <div class="info-box">
+      <h3>Payment Methods</h3>
+      <p>Flexible payment processing via <strong>Wish Money</strong> and <strong>Suyool</strong> for seamless WhatsApp checkout.</p>
+    </div>
+  </section>
+
+  <!-- Category Filter Buttons -->
+  <div class="filter-container">
+    <button class="filter-btn active" onclick="filterCategory('all', this)">All</button>
+    <button class="filter-btn" onclick="filterCategory('fatloss', this)">Fat Loss</button>
+    <button class="filter-btn" onclick="filterCategory('recovery', this)">Recovery & Joints</button>
+    <button class="filter-btn" onclick="filterCategory('brain', this)">Brain & Focus</button>
+    <button class="filter-btn" onclick="filterCategory('skin', this)">Skin & Anti-Aging</button>
+    <button class="filter-btn" onclick="filterCategory('longevity', this)">Longevity & Energy</button>
+  </div>
+
+  <!-- Catalog Section -->
+  <section id="catalog">
+    <div class="catalog-title">
+      <h2>Available Compounds</h2>
+    </div>
+
+    <div class="catalog-grid" id="productGrid">
+
+      <!-- Reta 10mg / 20mg -->
+      <div class="product-card" data-category="fatloss" data-name="Reta" onclick="openCardModal(this, 'Reta', 'Fat Loss & Appetite Control', 'Advanced multi-receptor agonist engineered to maximize metabolic rate, eliminate cravings, and accelerate fat loss.', ['Triple agonist action', 'High efficiency metabolic support', 'Prevents food cravings'])">
+        <div class="card-preview">
+          <img id="img-Reta" src="retra10.png" alt="Reta Vial"/>
+        </div>
+        <div class="card-body">
+          <div class="card-head">
+            <div class="product-title">Reta</div>
+            <div class="product-price" id="price-Reta">$150</div>
+          </div>
+
+          <div class="dose-selector-box" onclick="event.stopPropagation()">
+            <span class="dose-selector-label">SELECT DOSE:</span>
+            <div class="dose-options">
+              <button type="button" class="dose-btn active" data-price="150" data-img="retra10.png" onclick="selectDose(this, '10mg', 'Reta')">10mg</button>
+              <button type="button" class="dose-btn" data-price="250" data-img="retra20.png" onclick="selectDose(this, '20mg', 'Reta')">20mg</button>
+            </div>
+          </div>
+
+          <div class="click-info-hint">Click card for details</div>
+          <p class="product-desc">Advanced agonist for rapid fat loss and strong appetite control.</p>
+          <button class="btn-add-cart" id="btn-cart-Reta" onclick="event.stopPropagation(); addCardToCart(this, 'Reta')">Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Ghk-cu 50mg / 100mg -->
+      <div class="product-card" data-category="skin" data-name="Ghk-cu" onclick="openCardModal(this, 'Ghk-cu', 'Skin Elasticity & Hair Growth', 'Ghk-cu promotes collagen synthesis, improves skin firmness, and supports natural hair follicle rejuvenation.', ['Boosts collagen production', 'Skin elasticity support', 'Hair follicle revitalization'])">
+        <div class="card-preview">
+          <img id="img-Ghk-cu" src="ghk100.png" alt="Ghk-cu Vial"/>
+        </div>
+        <div class="card-body">
+          <div class="card-head">
+            <div class="product-title">Ghk-cu</div>
+            <div class="product-price" id="price-Ghk-cu">$110</div>
+          </div>
+
+          <div class="dose-selector-box" onclick="event.stopPropagation()">
+            <span class="dose-selector-label">SELECT DOSE:</span>
+            <div class="dose-options">
+              <button type="button" class="dose-btn" data-price="75" data-img="ghk50.png" onclick="selectDose(this, '50mg', 'Ghk-cu')">50mg</button>
+              <button type="button" class="dose-btn active" data-price="110" data-img="ghk100.png" onclick="selectDose(this, '100mg', 'Ghk-cu')">100mg</button>
+            </div>
+          </div>
+
+          <div class="click-info-hint">Click card for details</div>
+          <p class="product-desc">Copper peptide formulated for skin elasticity, hair growth, and collagen creation.</p>
+          <button class="btn-add-cart" id="btn-cart-Ghk-cu" onclick="event.stopPropagation(); addCardToCart(this, 'Ghk-cu')">Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- CJC-1295 -->
+      <div class="product-card" data-category="recovery" data-name="Cjc 1295" onclick="openPeptideModal('Cjc 1295 ($100)', 'Growth Hormone Release', 'Cjc 1295 stimulates natural growth hormone production, aiding muscle repair, fat metabolism, and recovery.', ['Enhances protein synthesis', 'Promotes muscle recovery', 'Supports fat metabolism'])">
+        <div class="card-preview">
+          <img src="cjc1295.png" alt="Cjc 1295 Vial"/>
+        </div>
+        <div class="card-body">
+          <div class="card-head">
+            <div class="product-title">Cjc 1295</div>
+            <div class="product-price">$100</div>
+          </div>
+          <div style="margin-bottom: 0.8rem;">
+            <span class="dosage-pill">Standard</span>
+          </div>
+          <div class="click-info-hint">Click for details</div>
+          <p class="product-desc">Growth hormone secretagogue that stimulates natural GH release and muscle recovery.</p>
+          <button class="btn-add-cart" onclick="event.stopPropagation(); addToCartExplicit('Cjc 1295', 'Standard', 100)">Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Ipamorelin 5mg -->
+      <div class="product-card" data-category="recovery" data-name="Ipamorelin" onclick="openPeptideModal('Ipamorelin 5mg ($95)', 'Sleep & Growth Secretagogue', 'Ipamorelin stimulates natural growth hormone release, aiding restorative sleep, recovery, and lean body composition.', ['Promotes deep restorative sleep', 'Supports clean muscle recovery', 'Pulsatile secretagogue'])">
+        <div class="card-preview">
+          <img src="ipamorelin .png" alt="Ipamorelin Vial"/>
+        </div>
+        <div class="card-body">
+          <div class="card-head">
+            <div class="product-title">Ipamorelin</div>
+            <div class="product-price">$95</div>
+          </div>
+          <div style="margin-bottom: 0.8rem;">
+            <span class="dosage-pill">5mg</span>
+          </div>
+          <div class="click-info-hint">Click for details</div>
+          <p class="product-desc">Stimulates clean natural growth hormone release for sleep and recovery.</p>
+          <button class="btn-add-cart" onclick="event.stopPropagation(); addToCartExplicit('Ipamorelin', '5mg', 95)">Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Tesamorelin 5mg -->
+      <div class="product-card" data-category="fatloss" data-name="Tesamorelin" onclick="openPeptideModal('Tesamorelin 5mg ($95)', 'Targeted Visceral Fat Reduction', 'Tesamorelin specifically targets abdominal visceral fat while boosting clean natural metabolic processes.', ['Targets abdominal fat', 'Supports metabolic rate', 'Clean GH releasing peptide'])">
+        <div class="card-preview">
+          <img src="tesamor.png" alt="Tesamorelin Vial"/>
+        </div>
+        <div class="card-body">
+          <div class="card-head">
+            <div class="product-title">Tesamorelin</div>
+            <div class="product-price">$95</div>
+          </div>
+          <div style="margin-bottom: 0.8rem;">
+            <span class="dosage-pill">5mg</span>
+          </div>
+          <div class="click-info-hint">Click for details</div>
+          <p class="product-desc">Targeted peptide designed specifically for burning abdominal belly fat.</p>
+          <button class="btn-add-cart" onclick="event.stopPropagation(); addToCartExplicit('Tesamorelin', '5mg', 95)">Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Lipotronin 5mg -->
+      <div class="product-card" data-category="fatloss" data-name="Lipotronin" onclick="openPeptideModal('Lipotronin 5mg ($100)', 'Metabolic & Fat Oxidation', 'Lipotronin supports targeted lipid breakdown and metabolic rate enhancement.', ['Supports fat breakdown', 'Sustains energy levels', 'Metabolic optimization'])">
+        <div class="card-preview">
+          <img src="lipotropin.png" alt="Lipotronin Vial"/>
+        </div>
+        <div class="card-body">
+          <div class="card-head">
+            <div class="product-title">Lipotronin</div>
+            <div class="product-price">$100</div>
+          </div>
+          <div style="margin-bottom: 0.8rem;">
+            <span class="dosage-pill">5mg</span>
+          </div>
+          <div class="click-info-hint">Click for details</div>
+          <p class="product-desc">Specialized peptide for lipid metabolism and energy enhancement.</p>
+          <button class="btn-add-cart" onclick="event.stopPropagation(); addToCartExplicit('Lipotronin', '5mg', 100)">Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Nad+ -->
+      <div class="product-card" data-category="longevity" data-name="Nad+" onclick="openPeptideModal('Nad+ ($95)', 'Cellular Repair & Anti-Aging', 'Nad+ powers cellular energy production, sirtuin longevity pathways, and DNA repair mechanisms.', ['Supports DNA repair', 'Boosts cellular energy', 'Promotes mental clarity'])">
+        <div class="card-preview">
+          <img src="nad 500.png" alt="Nad+ Vial"/>
+        </div>
+        <div class="card-body">
+          <div class="card-head">
+            <div class="product-title">Nad+</div>
+            <div class="product-price">$95</div>
+          </div>
+          <div style="margin-bottom: 0.8rem;">
+            <span class="dosage-pill">500mg</span>
+          </div>
+          <div class="click-info-hint">Click for details</div>
+          <p class="product-desc">Coenzyme essential for cellular repair, energy output, and longevity.</p>
+          <button class="btn-add-cart" onclick="event.stopPropagation(); addToCartExplicit('Nad+', '500mg', 95)">Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Bpc 157 -->
+      <div class="product-card" data-category="recovery" data-name="Bpc 157" onclick="openCardModal(this, 'Bpc 157', 'Tissue & Joint Healing', 'Bpc 157 promotes tendon, ligament, gut wall, and muscle tissue recovery.', ['Rapid joint & tendon support', 'Gut tissue maintenance', 'Accelerates recovery'])">
+        <div class="card-preview">
+          <img id="img-Bpc 157" src="bpc 5.png" alt="Bpc 157 Vial"/>
+        </div>
+        <div class="card-body">
+          <div class="card-head">
+            <div class="product-title">Bpc 157</div>
+            <div class="product-price" id="price-Bpc 157">$95</div>
+          </div>
+
+          <div class="dose-selector-box" onclick="event.stopPropagation()">
+            <span class="dose-selector-label">SELECT DOSE:</span>
+            <div class="dose-options">
+              <button type="button" class="dose-btn active" data-price="95" data-img="bpc 5.png" onclick="selectDose(this, '5mg', 'Bpc 157')">5mg</button>
+              <button type="button" class="dose-btn" data-price="160" data-img="bpc 10.png" onclick="selectDose(this, '10mg', 'Bpc 157')">10mg</button>
+            </div>
+          </div>
+
+          <div class="click-info-hint">Click card for details</div>
+          <p class="product-desc">Accelerates healing for joints, tendons, ligaments, and gut tissue.</p>
+          <button class="btn-add-cart" id="btn-cart-Bpc 157" onclick="event.stopPropagation(); addCardToCart(this, 'Bpc 157')">Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Tb500 -->
+      <div class="product-card" data-category="recovery" data-name="Tb500" onclick="openCardModal(this, 'Tb500', 'Muscle & Connective Repair', 'Tb500 promotes cellular migration and systemic inflammation reduction throughout the body.', ['Supports muscle flexibility', 'Systemic tissue repair', 'Reduces physical soreness'])">
+        <div class="card-preview">
+          <img id="img-Tb500" src="tb 5.png" alt="Tb500 Vial"/>
+        </div>
+        <div class="card-body">
+          <div class="card-head">
+            <div class="product-title">Tb500</div>
+            <div class="product-price" id="price-Tb500">$95</div>
+          </div>
+
+          <div class="dose-selector-box" onclick="event.stopPropagation()">
+            <span class="dose-selector-label">SELECT DOSE:</span>
+            <div class="dose-options">
+              <button type="button" class="dose-btn active" data-price="95" data-img="tb 5.png" onclick="selectDose(this, '5mg', 'Tb500')">5mg</button>
+              <button type="button" class="dose-btn" data-price="160" data-img="tb 10.png" onclick="selectDose(this, '10mg', 'Tb500')">10mg</button>
+            </div>
+          </div>
+
+          <div class="click-info-hint">Click card for details</div>
+          <p class="product-desc">Promotes tissue flexibility, reduces inflammation, and speeds up recovery.</p>
+          <button class="btn-add-cart" id="btn-cart-Tb500" onclick="event.stopPropagation(); addCardToCart(this, 'Tb500')">Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Wolverine stack -->
+      <div class="product-card" data-category="recovery" data-name="Wolverine stack" onclick="openPeptideModal('Wolverine stack 10mg ($110)', 'Ultimate Recovery Blend', 'Bpc 157 and Tb500 blend combined for high speed healing and joint support.', ['Synergistic healing stack', 'Accelerates injury repair', 'Maximum joint support'])">
+        <div class="card-preview">
+          <img src="wolverin.png" alt="Wolverine stack Vial"/>
+        </div>
+        <div class="card-body">
+          <div class="card-head">
+            <div class="product-title">Wolverine stack</div>
+            <div class="product-price">$110</div>
+          </div>
+          <div style="margin-bottom:0.8rem;">
+            <span class="dosage-pill">10mg</span>
+          </div>
+          <div class="click-info-hint">Click for details</div>
+          <p class="product-desc">Bpc 157 and Tb500 blend combined for high speed healing and joint support.</p>
+          <button class="btn-add-cart" onclick="event.stopPropagation(); addToCartExplicit('Wolverine stack', '10mg', 110)">Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Semax -->
+      <div class="product-card" data-category="brain" data-name="Semax" onclick="openPeptideModal('Semax 30mg ($90)', 'Cognitive Enhancement', 'Cognitive peptide for heightened focus, mental sharpness, and clarity.', ['Enhances mental focus', 'Supports cognitive endurance', 'Neuroprotective benefits'])">
+        <div class="card-preview">
+          <img src="semax.png" alt="Semax Vial"/>
+        </div>
+        <div class="card-body">
+          <div class="card-head">
+            <div class="product-title">Semax</div>
+            <div class="product-price">$90</div>
+          </div>
+          <div style="margin-bottom:0.8rem;">
+            <span class="dosage-pill">30mg</span>
+          </div>
+          <div class="click-info-hint">Click for details</div>
+          <p class="product-desc">Cognitive peptide for heightened focus, mental sharpness, and clarity.</p>
+          <button class="btn-add-cart" onclick="event.stopPropagation(); addToCartExplicit('Semax', '30mg', 90)">Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Selank -->
+      <div class="product-card" data-category="brain" data-name="Selank" onclick="openPeptideModal('Selank 30mg ($90)', 'Stress Relief & Calm Focus', 'Calming brain peptide for stress relief and clear focus.', ['Reduces anxiety & stress', 'Promotes calm clarity', 'Supports emotional balance'])">
+        <div class="card-preview">
+          <img src="selank.png" alt="Selank Vial"/>
+        </div>
+        <div class="card-body">
+          <div class="card-head">
+            <div class="product-title">Selank</div>
+            <div class="product-price">$90</div>
+          </div>
+          <div style="margin-bottom:0.8rem;">
+            <span class="dosage-pill">30mg</span>
+          </div>
+          <div class="click-info-hint">Click for details</div>
+          <p class="product-desc">Calming brain peptide for stress relief and clear focus.</p>
+          <button class="btn-add-cart" onclick="event.stopPropagation(); addToCartExplicit('Selank', '30mg', 90)">Add to Cart</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Accordion FAQ Section -->
+  <section class="faq-section" id="faq">
+    <h2>Frequently Asked Questions</h2>
+    
+    <div class="faq-item">
+      <button class="faq-question">
+        <span>How do I place an order via WhatsApp?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <p>Simply select your desired items, adjust quantities in your cart, and click "Checkout via WhatsApp". This will open a pre-formatted message with your order breakdown directly in WhatsApp so our team can finalize your order details.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        <span>What payment options and shipping areas do you cover?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <p>We deliver all over Lebanon with a flat delivery fee of <strong>$5</strong>. Payments are accepted via <strong>Wish Money</strong> and <strong>Suyool</strong>.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        <span>How should compounds be stored?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <p>Unreconstituted lyophilized powders should be stored in a cool, dry place away from direct sunlight. Once reconstituted, store solutions in a refrigerator between 2C and 8C.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Peptide Detail Modal -->
+  <div class="modal-overlay" id="peptideModal" onclick="closePeptideModal()">
+    <div class="modal-card" onclick="event.stopPropagation()">
+      <button class="modal-close-btn" onclick="closePeptideModal()">&times;</button>
+      
+      <div class="modal-preview">
+        <img id="modalImage" src="" alt="Modal Product Image"/>
+      </div>
+
+      <div class="modal-category" id="modalCategory">Category</div>
+      <div class="modal-title" id="modalTitle">Peptide Name</div>
+      
+      <div class="modal-explanation" id="modalExplanation">
+        Explanation here...
+      </div>
+
+      <div class="modal-highlights" id="modalHighlights">
+        <!-- Highlights added via JS -->
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-add-cart" id="modalAddToCartBtn">Add to Cart</button>
+        <button class="btn-secondary" onclick="closePeptideModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cart Drawer -->
+  <div class="cart-backdrop" id="cartOverlay" onclick="toggleCart()"></div>
+  <div class="cart-panel" id="cartPanel">
+    <div>
+      <div class="cart-header">
+        <h3>Your Cart</h3>
+        <button class="close-btn" onclick="toggleCart()">&times;</button>
+      </div>
+      <div class="cart-items" id="cartList">
+        <p class="empty-cart">Your cart is empty.</p>
+      </div>
+    </div>
+
+    <div>
+      <div class="cart-summary" id="cartSummary">
+        <div class="summary-row">
+          <span>Items Subtotal:</span>
+          <span id="summarySubtotal">$0</span>
+        </div>
+        <div class="summary-row">
+          <span>Delivery (All over Lebanon):</span>
+          <span id="summaryDelivery">$5</span>
+        </div>
+        <div class="summary-row total">
+          <span>Total Price:</span>
+          <span id="summaryTotalPrice" style="color:var(--primary-gold);">$5</span>
+        </div>
+      </div>
+
+      <div class="payment-badge-box">
+        Payment via: <strong>Wish Money</strong> or <strong>Suyool</strong>
+      </div>
+
+      <button class="whatsapp-btn" onclick="checkoutWhatsApp()">
+        <svg viewBox="0 0 24 24">
+          <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.572-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+        </svg>
+        Checkout On WhatsApp &rarr;
+      </button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <a href="#" class="brand-logo">BIOHACK</a>
+    <p>TikTok Official: <a href="https://www.tiktok.com/@biohack.peptide?_r=1&_t=ZS-98FJKgIG34m" target="_blank" style="color:var(--primary-gold); text-decoration:none; font-weight:700;">@biohack.peptide</a></p>
+    <p style="margin-top:0.4rem; font-size:0.8rem; color:var(--text-muted);">Accepted Payments: Wish Money & Suyool | Delivery all over Lebanon ($5)</p>
+  </footer>
+
+  <script>
+    let cart = [];
+    const PHONE_NUMBER = "96176192117";
+    const DELIVERY_FEE = 5;
+    let activeModalItem = { name: '', dosage: '', price: 0 };
+
+    function selectDose(btn, dose, productName) {
+      const container = btn.closest('.dose-options');
+      container.querySelectorAll('.dose-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const price = btn.getAttribute('data-price');
+      const newImg = btn.getAttribute('data-img');
+
+      const priceElement = document.getElementById(`price-${productName}`);
+      if (priceElement) {
+        priceElement.innerText = `$${price}`;
+      }
+
+      const imgElement = document.getElementById(`img-${productName}`);
+      if (imgElement && newImg) {
+        imgElement.src = newImg;
+      }
+    }
+
+    function addCardToCart(btn, name) {
+      const card = btn.closest('.product-card');
+      const activeDoseBtn = card.querySelector('.dose-btn.active');
+      if (!activeDoseBtn) return;
+
+      const dose = activeDoseBtn.innerText.trim();
+      const price = parseFloat(activeDoseBtn.getAttribute('data-price')) || 0;
+      addToCartExplicit(name, dose, price);
+    }
+
+    function openCardModal(card, name, category, explanation, highlights) {
+      const activeDoseBtn = card.querySelector('.dose-btn.active');
+      const dose = activeDoseBtn ? activeDoseBtn.innerText.trim() : '';
+      const price = activeDoseBtn ? parseFloat(activeDoseBtn.getAttribute('data-price')) || 0 : 0;
+      const imgSrc = card.querySelector('.card-preview img').src;
+      
+      openPeptideModal(`${name} ${dose} ${price ? '($' + price + ')' : ''}`, category, explanation, highlights, imgSrc);
+    }
+
+    function showToast(message) {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.innerText = message;
+
+      container.appendChild(toast);
+      setTimeout(() => toast.classList.add('show'), 10);
+
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    function openPeptideModal(title, category, explanation, highlights, customImgSrc = '') {
+      document.getElementById('modalTitle').innerText = title;
+      document.getElementById('modalCategory').innerText = category;
+      document.getElementById('modalExplanation').innerText = explanation;
+      
+      if (customImgSrc) {
+        document.getElementById('modalImage').src = customImgSrc;
+      } else {
+        const cardElem = Array.from(document.querySelectorAll('.product-card')).find(c => c.getAttribute('data-name') && title.includes(c.getAttribute('data-name')));
+        if (cardElem) {
+          document.getElementById('modalImage').src = cardElem.querySelector('.card-preview img').src;
+        }
+      }
+
+      const titleParts = title.split(' ');
+      const name = titleParts[0];
+      const dosage = titleParts[1] || '';
+      let price = 0;
+      if (title.includes('$')) {
+        price = parseFloat(title.split('$')[1]) || 0;
+      }
+
+      activeModalItem = { name: name, dosage: dosage, price: price };
+
+      const modalAddBtn = document.getElementById('modalAddToCartBtn');
+      modalAddBtn.className = 'btn-add-cart';
+      modalAddBtn.disabled = false;
+      modalAddBtn.innerText = 'Add to Cart';
+      modalAddBtn.onclick = function() {
+        addToCartExplicit(activeModalItem.name, activeModalItem.dosage, activeModalItem.price);
+        closePeptideModal();
+      };
+
+      const highlightsContainer = document.getElementById('modalHighlights');
+      highlightsContainer.innerHTML = highlights.map(item => `
+        <div class="modal-highlight-item">
+          <span>-</span> ${item}
+        </div>
+      `).join('');
+
+      document.getElementById('peptideModal').classList.add('open');
+    }
+
+    function closePeptideModal() {
+      document.getElementById('peptideModal').classList.remove('open');
+    }
+
+    function toggleCart() {
+      document.getElementById('cartOverlay').classList.toggle('open');
+      document.getElementById('cartPanel').classList.toggle('open');
+    }
+
+    function addToCartExplicit(name, dosage, price) {
+      const existingIndex = cart.findIndex(item => item.name === name && item.dosage === dosage);
+
+      if (existingIndex > -1) {
+        cart[existingIndex].qty += 1;
+      } else {
+        cart.push({ name, dosage, price, qty: 1 });
+      }
+
+      updateCart();
+      showToast(`Added ${name} (${dosage}) to cart!`);
+    }
+
+    function updateQty(index, delta) {
+      cart[index].qty += delta;
+      if (cart[index].qty <= 0) {
+        cart.splice(index, 1);
+      }
+      updateCart();
+    }
+
+    function updateCart() {
+      const cartList = document.getElementById('cartList');
+      const cartCount = document.getElementById('cartCount');
+      const summarySubtotal = document.getElementById('summarySubtotal');
+      const summaryDelivery = document.getElementById('summaryDelivery');
+      const summaryTotalPrice = document.getElementById('summaryTotalPrice');
+
+      const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+      const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+      const finalTotal = totalItems > 0 ? subtotal + DELIVERY_FEE : 0;
+
+      cartCount.innerText = totalItems;
+      summarySubtotal.innerText = `$${subtotal}`;
+      summaryDelivery.innerText = totalItems > 0 ? `$${DELIVERY_FEE}` : '$0';
+      summaryTotalPrice.innerText = `$${finalTotal}`;
+
+      if (cart.length === 0) {
+        cartList.innerHTML = `<p class="empty-cart">Your cart is empty.</p>`;
+        return;
+      }
+
+      cartList.innerHTML = cart.map((item, index) => `
+        <div class="cart-item">
+          <div>
+            <div class="item-title">${item.name}</div>
+            <div class="item-dose">${item.dosage}</div>
+            ${item.price ? `<div class="item-price">$${item.price} each</div>` : ''}
+          </div>
+          <div class="qty-controls">
+            <button class="q-btn" onclick="updateQty(${index}, -1)">-</button>
+            <span style="font-size:0.9rem; font-weight:800; color:var(--text-main);">${item.qty}</span>
+            <button class="q-btn" onclick="updateQty(${index}, 1)">+</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function checkoutWhatsApp() {
+      if (cart.length === 0) {
+        alert("Your cart is empty!");
+        return;
+      }
+
+      const itemsList = cart.map(item => {
+        const qtyText = item.qty > 1 ? ` (x${item.qty})` : '';
+        const priceText = item.price ? ` - $${item.price * item.qty}` : '';
+        return `${item.name} ${item.dosage}${qtyText}${priceText}`;
+      }).join('\n- ');
+
+      const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+      const total = subtotal + DELIVERY_FEE;
+      const text = `Hey! I'd like to place an order:\n\n- ${itemsList}\n\nSubtotal: $${subtotal}\nDelivery (Lebanon): $${DELIVERY_FEE}\nTotal Amount: $${total}\n\nPayment Method: Wish Money / Suyool\n\nPlease send details to proceed!`;
+
+      const encoded = encodeURIComponent(text);
+      const url = `https://wa.me/${PHONE_NUMBER}?text=${encoded}`;
+
+      window.open(url, '_blank');
+    }
+
+    function filterCategory(category, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const cards = document.querySelectorAll('.product-card');
+      cards.forEach(card => {
+        if (category === 'all' || card.getAttribute('data-category') === category) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    function filterPeptides() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      const cards = document.querySelectorAll('.product-card');
+
+      cards.forEach(card => {
+        const name = card.getAttribute('data-name').toLowerCase();
+        const desc = card.querySelector('.product-desc').innerText.toLowerCase();
+
+        if (name.includes(query) || desc.includes(query)) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    document.querySelectorAll('.faq-question').forEach(button => {
+      button.addEventListener('click', () => {
+        const faqItem = button.parentElement;
+        const isActive = faqItem.classList.contains('active');
+
+        document.querySelectorAll('.faq-item').forEach(item => item.classList.remove('active'));
+
+        if (!isActive) {
+          faqItem.classList.add('active');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
